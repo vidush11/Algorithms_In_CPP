@@ -12,22 +12,40 @@
 		<key>bfs.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<key>dfs.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
-		<key>prims(lazy).xcscheme_^#shared#^_</key>
+		<key>prims_lazy.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>3</integer>
+			<integer>4</integer>
 		</dict>
 		<key>priority_queue.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>AB78D21C2BDCDA21007CD752</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AB78D24B2BDD6AAD007CD752</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AB78D25A2BDFC9E9007CD752</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

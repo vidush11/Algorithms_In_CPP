@@ -95,34 +95,51 @@ struct Graph{
     vector<vector <Edge> > prims(int start){
         Node* start_node=create_node(start);
         priority_queue <Edge, vector<Edge>, edge_compare> pq;
-        
+
         int visited[nodes.size()]; //make sure to add nodes in order from 0 onwards
         for (int i=0; i<nodes.size(); i++) {visited[i]=0;}
         visited[start_node->data]=1;
-        vector<vector<Edge> > answer;
+        
+        vector< vector<Edge> > answer;
         
         int count=0;
-        while (not pq.empty() || start_node==create_node(start)){
+        answer.push_back(*(new vector<Edge>));
+        while (true){
+            
             for (Edge edge: graph[start_node]){
                 if (not visited[edge.to->data]) pq.push(edge);
+//                printf("done");
             }
-            Edge curr_edge=pq.top();
-            pq.pop();
-            if (not visited[curr_edge.to->data]) {
-                if (answer[count].empty()) answer[count]=*(new vector<Edge> );
-                answer[count].push_back(curr_edge);
-                cout<<"done";
-                start_node=curr_edge.to;
-                continue;
+            if (not pq.empty()){
+                Edge curr_edge=pq.top();
+                pq.pop();
+                
+                if (not visited[curr_edge.to->data]) {
+//                    cout<<curr_edge.to->data<<endl;
+//                    if (answer[count].empty()) answer[count]= *(new vector<Edge> );
+                    
+                    answer[count].push_back(curr_edge);
+                    
+                    start_node=curr_edge.to;
+                    visited[curr_edge.to->data]=1;
+                    continue;
                 } //push edge
-            
-            if (pq.empty()){
-                int ind=0;
+            }
+           
+            else if (pq.empty()){
+                bool res=0;
                 for (int i=0; i<nodes.size(); i++){
-                    if (not visited[i]) {ind=i;break;}
+                    if (not visited[i]) {
+                        start_node=create_node(i);
+                        visited[i]=1;
+                        res=1;
+                        count++;
+                        answer.push_back(*(new vector<Edge>));
+                        break;}
+                    
                 }
-                start_node=create_node(ind);
-                count++;
+                
+                if (res==0) break;
             }
         }
         
@@ -134,25 +151,24 @@ struct Graph{
 int main(){
     Graph my_graph;
     
-    my_graph.add_undirected_edge(0, 1, 5);
-    my_graph.add_undirected_edge(1, 2, 4);
-    my_graph.add_undirected_edge(2, 9, 2);
-    my_graph.add_undirected_edge(0, 4, 1);
-    my_graph.add_undirected_edge(0, 3, 4);
-    my_graph.add_undirected_edge(1, 3, 2);
-    my_graph.add_undirected_edge(2, 7, 4);
-    my_graph.add_undirected_edge(2, 8, 1);
-    my_graph.add_undirected_edge(9, 8, 0);
-    my_graph.add_undirected_edge(4, 5, 1);
-    my_graph.add_undirected_edge(5, 6, 7);
-    my_graph.add_undirected_edge(6, 8, 4);
-    my_graph.add_undirected_edge(4, 3, 2);
-    my_graph.add_undirected_edge(5, 3, 5);
-    my_graph.add_undirected_edge(3, 6, 11);
-    my_graph.add_undirected_edge(6, 7, 1);
-    my_graph.add_undirected_edge(3, 7, 2);
-    my_graph.add_undirected_edge(7, 8, 6);
+    my_graph.add_directed_edge(0, 0, 1);
+    my_graph.add_directed_edge(1, 2, 1);
+    my_graph.add_directed_edge(2, 3, 4);
+    my_graph.add_directed_edge(2, 4, 5);
+    my_graph.add_directed_edge(3, 5, 2);
+    
+    my_graph.add_directed_edge(5, 6, 0);
+    my_graph.add_directed_edge(2, 6, 1);
+    my_graph.add_directed_edge(7, 8, 10);
+    my_graph.add_directed_edge(8, 9, 4);
+    
     
     vector<vector<Edge> > v=my_graph.prims(0);
-    cout<<v.size();
+    
+    for (int i=0; i<v.size(); i++){
+        print_vector(v[i]);
+        cout<<endl;
+    }
 }
+
+
