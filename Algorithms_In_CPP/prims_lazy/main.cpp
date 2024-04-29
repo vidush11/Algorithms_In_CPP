@@ -1,6 +1,6 @@
 //
 //  main.cpp
-//  BFS
+//  PRIMS_LAZY
 //
 //  Created by Vidush Jindal on 27/04/24.
 //
