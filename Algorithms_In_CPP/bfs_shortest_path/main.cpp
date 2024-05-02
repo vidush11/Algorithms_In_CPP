@@ -209,12 +209,7 @@ int main(){
     my_graph.add_undirected_edge(3, 4, 1);
     my_graph.add_undirected_edge(4, 5, 0);
     my_graph.add_undirected_edge(5, 2, 100);
-//    my_graph.add_undirected_edge(2, 2, 1);
-//    my_graph.add_undirected_edge(2, 3, 1);
-//    my_graph.add_undirected_edge(6, 2, 1);
-//    my_graph.add_undirected_edge(1, 6, 1);
-    
-    
+
     my_graph.BFS_shortest(0, 3);
     
     my_graph.clear();
