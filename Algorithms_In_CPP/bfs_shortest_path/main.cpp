@@ -81,7 +81,7 @@ void add_directed_edge_(map<Node* , vector<Edge> > &graph, Node* from, Node* to,
 }
 
 
-void BFS_(map<Node* , vector<Edge> > graph, Node* from, int n){
+void BFS_shortest_(map<Node* , vector<Edge> > graph, Node* from, Node* to, int n, Node* prev[], int &cost){
     int visit[n]; //visited array
     for (int i=0; i<n; i++) visit[i]=0;
     Queue my_queue= *(new Queue());
@@ -89,16 +89,34 @@ void BFS_(map<Node* , vector<Edge> > graph, Node* from, int n){
     my_queue.push(from);
     visit[from->data]=1;
     
+    Node* filler=new Node();
+    my_queue.push(filler);
+    
+    cost=0;
+    
     while (not my_queue.is_empty()){
         Node* node=my_queue.pop();
-        //if node is visited;
-        cout<<node->data<<' ';
+        if (node->data==-1){
+            cost++;
+            if (my_queue.is_empty()) {break;}
+            Node* filler=new Node();
+            my_queue.push(filler);
+            continue;
+
+        }
+        
+        
+        if (node==to) break;
+        
         for (Edge edge: graph[node]){
-            if (not visit[edge.to->data]) my_queue.push(edge.to);
-            visit[edge.to->data]=1;
+            if (not visit[edge.to->data]) {
+                my_queue.push(edge.to);
+                prev[edge.to->data]=node;
+                visit[edge.to->data]=1;
+            }
         }
     }
-    cout<<endl;
+    
 }
 
 struct Graph{
@@ -113,8 +131,11 @@ struct Graph{
                 break;}
         }
         
-        if (not from_node) from_node=new Node;
-        from_node->data=nd;
+        if (not from_node) {
+            from_node=new Node;
+            from_node->data=nd;
+            nodes.push_back(from_node);
+        }
         return from_node;
     }
     
@@ -127,11 +148,50 @@ struct Graph{
         
         add_directed_edge_(graph, from_node, to_node, cost);
     }
-    void BFS(int from){
-        Node* from_node=create_node(from);
+    
+    void add_undirected_edge(int from, int to, int cost){
         
-        BFS_(graph, from_node, nodes.size());
+        add_directed_edge(from, to, cost);
+        add_directed_edge(to, from, cost);
     }
+    
+    void BFS_shortest(int from, int to){
+        Node* from_node=create_node(from);
+        Node* to_node=create_node(to);
+        
+        Node* prev[nodes.size()];
+        Node* path[nodes.size()];
+        
+        for (int i=0; i<nodes.size(); i++) {
+            prev[i]=0;
+            path[i]=0;
+        } //initialize
+        
+        int cost=0;
+        
+        BFS_shortest_(graph, from_node, to_node, nodes.size(), prev, cost);
+        
+        int i=cost;
+        
+        for (Node* temp=to_node; temp; temp=prev[temp->data]){
+            path[i]=temp;
+            i--;
+        }
+        
+        if (path[0]==from_node){
+            for (int j=0; j<cost; j++){
+                cout<<path[j]->data<<"->";
+            }
+            cout<<path[cost]->data<<endl;
+            
+            cout<<"Cost- "<<cost+1<<endl;
+        }
+        else{
+            cout<<"No shortest path exists.\n";
+        }
+        
+    }
+    
     
     void clear(){
         nodes.clear();
@@ -142,28 +202,23 @@ struct Graph{
 
 int main(){
     Graph my_graph;
-    my_graph.add_directed_edge(1, 2, 1);
-    my_graph.add_directed_edge(1, 2, 1);
-    my_graph.add_directed_edge(1, 3, 1);
-    my_graph.add_directed_edge(2, 4, 1);
-    my_graph.add_directed_edge(2, 5, 1);
-    my_graph.add_directed_edge(3, 6, 1);
-    my_graph.add_directed_edge(3, 7, 1);
-    my_graph.add_directed_edge(2, 2, 1);
-    my_graph.add_directed_edge(2, 3, 1);
-    my_graph.add_directed_edge(6, 2, 1);
-    my_graph.add_directed_edge(1, 6, 1);
+    my_graph.add_undirected_edge(0, 1, 4);
+    my_graph.add_undirected_edge(0, 2, 4);
+    my_graph.add_undirected_edge(0, 3, 6);
+    my_graph.add_undirected_edge(1, 3, 0);
+    my_graph.add_undirected_edge(3, 4, 1);
+    my_graph.add_undirected_edge(4, 5, 0);
+    my_graph.add_undirected_edge(5, 2, 100);
+//    my_graph.add_undirected_edge(2, 2, 1);
+//    my_graph.add_undirected_edge(2, 3, 1);
+//    my_graph.add_undirected_edge(6, 2, 1);
+//    my_graph.add_undirected_edge(1, 6, 1);
     
-    my_graph.BFS(1);
+    
+    my_graph.BFS_shortest(0, 3);
     
     my_graph.clear();
-    
 
-    int numNodes = 100;
-    for (int i = 0; i < numNodes; i++){
-        for (int j = 0; j < numNodes; j++) {my_graph.add_directed_edge( i, j, 1);}
-    }
-    my_graph.BFS(6);
 }
 
 
