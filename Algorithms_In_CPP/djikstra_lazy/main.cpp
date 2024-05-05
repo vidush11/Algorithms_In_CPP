@@ -10,8 +10,6 @@
 #include <vector>
 #include <map>
 #include <queue>
-
-
 using namespace std;
 
 struct Node{
@@ -47,8 +45,6 @@ struct pair_compare{
     }
 };
 
-
-
 void print_vector(vector<Edge> v){
     for (int i=0; i<v.size(); i++){
         printf("From- %d, To- %d, Cost- %d\n", v[i].from->data, v[i].to->data, v[i].cost);
@@ -76,7 +72,6 @@ vector<Pair> djikstra_(map<Node* , vector<Edge> > &graph, int n, int maxd, Node*
     dist[from->data]=0;
     
     visited[from->data]=1;
-    
     
     while (not pq.empty()){
         Pair curr_pair=pq.top();
@@ -141,8 +136,7 @@ struct Graph{
         add_directed_edge(to, from, cost);
         
     }
-    
-    
+
     void clear(){
         nodes.clear();
         graph.clear();
@@ -167,7 +161,6 @@ struct Graph{
         }
         //-1 represents can't be reached
         
-        
         vector<Node*> revpath;
         vector<Node*> path;
         int c=0;
@@ -187,9 +180,8 @@ struct Graph{
         }
         cout<<path[c-1]->data<<endl;
         
-        
     }
-    
+
 };
 
 int main(){
@@ -205,7 +197,6 @@ int main(){
     my_graph.add_undirected_edge(2, 0, 1);
     my_graph.add_undirected_edge(7, 0, 10);
     my_graph.add_undirected_edge(2, 6, 4);
-    
     
     my_graph.djikstra(0, 7);
     
