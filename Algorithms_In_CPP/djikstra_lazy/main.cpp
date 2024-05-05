@@ -18,6 +18,16 @@ struct Node{
     int data=-1;
 };
 
+struct Pair{
+    Node* node;
+    int dist;
+    
+    Pair(Node* node, int dist){
+        this->node=node;
+        this->dist=dist;
+    }
+};
+
 struct Edge{
     Node* from;
     Node* to;
@@ -31,11 +41,13 @@ struct Edge{
     }
 };
 
-struct edge_compare{
-    bool operator()(Edge a, Edge b){
-        return a.cost>b.cost;
+struct pair_compare{
+    bool operator()(Pair a, Pair b){
+        return a.dist>b.dist;
     }
 };
+
+
 
 void print_vector(vector<Edge> v){
     for (int i=0; i<v.size(); i++){
@@ -51,6 +63,51 @@ void add_directed_edge_(map<Node* , vector<Edge> > &graph, Node* from, Node* to,
     graph[from].push_back(new_edge);
 }
 
+vector<Pair> djikstra_(map<Node* , vector<Edge> > &graph, int n, int maxd, Node* from){
+    
+    priority_queue <Pair, vector<Pair>, pair_compare> pq;
+ 
+    int visited[n]; //make sure to add nodes in order from 0 onwards
+    Node* prev[n];
+    vector<int> dist;
+    
+    for (int i=0; i<n; i++) {visited[i]=0;prev[i]=0; dist.push_back(maxd);}
+    pq.push(Pair(from, 0));
+    dist[from->data]=0;
+    
+    visited[from->data]=1;
+    
+    
+    while (not pq.empty()){
+        Pair curr_pair=pq.top();
+        pq.pop();
+        
+        int node_int=curr_pair.node->data;
+        if (dist[node_int]!=curr_pair.dist) continue; //if a nodes distance is larger, I will be not visited by default
+        
+        visited[node_int]=1;
+        
+        for (Edge edge: graph[curr_pair.node]){
+            if (not visited[edge.to->data]){
+                int new_dist=curr_pair.dist+edge.cost;
+                if (new_dist<dist[edge.to->data]) {
+//                    cout<<edge.to->data<<" "<<new_dist<<endl;
+                    dist[edge.to->data]=new_dist;
+                    pq.push(Pair(edge.to, new_dist));
+                    prev[edge.to->data]=curr_pair.node;
+                }
+            }
+        }
+        
+    }
+    
+    vector<Pair> answer;
+    
+    for (int i=0; i<n; i++){
+        answer.push_back( Pair(prev[i],dist[i]) );
+    }
+    return answer;
+}
 struct Graph{
     vector<Node *> nodes;
     map<Node*, vector<Edge> > graph;
@@ -85,90 +142,74 @@ struct Graph{
         
     }
     
-
     
     void clear(){
         nodes.clear();
         graph.clear();
     }
     
-    vector<vector <Edge> > prims(int start){
+    void djikstra(int start, int to){
         Node* start_node=create_node(start);
-        priority_queue <Edge, vector<Edge>, edge_compare> pq;
-
-        int visited[nodes.size()]; //make sure to add nodes in order from 0 onwards
-        for (int i=0; i<nodes.size(); i++) {visited[i]=0;}
-        visited[start_node->data]=1;
+        Node* to_node=create_node(to);
+        int maxd=0;
         
-        vector< vector<Edge> > answer;
-        
-        int count=0;
-        answer.push_back(*(new vector<Edge>));
-        while (true){
-            
-            for (Edge edge: graph[start_node]){
-                if (not visited[edge.to->data]) pq.push(edge);
-//                printf("done");
-            }
-            if (not pq.empty()){
-                Edge curr_edge=pq.top();
-                pq.pop();
-                
-                if (not visited[curr_edge.to->data]) {
-//                    cout<<curr_edge.to->data<<endl;
-//                    if (answer[count].empty()) answer[count]= *(new vector<Edge> );
-                    
-                    answer[count].push_back(curr_edge);
-                    
-                    start_node=curr_edge.to;
-                    visited[curr_edge.to->data]=1;
-                    continue;
-                } //push edge
-            }
-           
-            else if (pq.empty()){
-                bool res=0;
-                for (int i=0; i<nodes.size(); i++){
-                    if (not visited[i]) {
-                        start_node=create_node(i);
-                        visited[i]=1;
-                        res=1;
-                        count++;
-                        answer.push_back(*(new vector<Edge>));
-                        break;}
-                    
-                }
-                
-                if (res==0) break;
+        for (int i=0; i<nodes.size(); i++){
+            for (Edge edge: graph[nodes[i]]){
+                maxd+=edge.cost;
             }
         }
         
-        return answer;
+        vector<Pair> answer= djikstra_(graph, nodes.size(), maxd+1, start_node); //maxd+1 will be inf
+        
+        for (int i=0; i<nodes.size(); i++){
+            if (answer[i].dist==maxd+1) {answer[i].dist=-1;}
+            cout<<"Node "<<i<<" , Distance- "<<answer[i].dist<<endl;
+        }
+        //-1 represents can't be reached
+        
+        
+        vector<Node*> revpath;
+        vector<Node*> path;
+        int c=0;
+        
+        for (Node* node=to_node ; node; node=answer[node->data].node){
+            revpath.push_back(node);
+            c++;
+        }
+        
+        for (int i=c-1; i>=0; i--){
+            path.push_back(revpath[i]);
+        }
+        printf("\nDistance- %d\n", answer[to].dist);
+        printf("Path from %d to %d-\t", start,to);
+        for (int i=0; i<c-1; i++){
+            cout<<path[i]->data<<"->";
+        }
+        cout<<path[c-1]->data<<endl;
+        
+        
     }
+    
 };
-
 
 int main(){
     Graph my_graph;
     
-    my_graph.add_directed_edge(0, 0, 1);
-    my_graph.add_directed_edge(1, 2, 1);
-    my_graph.add_directed_edge(2, 3, 4);
-    my_graph.add_directed_edge(2, 4, 5);
-    my_graph.add_directed_edge(3, 5, 2);
+    my_graph.add_undirected_edge(0, 1, 1);
+    my_graph.add_undirected_edge(1, 2, 3);
+    my_graph.add_undirected_edge(2, 7, 6);
+    my_graph.add_undirected_edge(2, 1, 5);
+    my_graph.add_undirected_edge(3, 3, 2);
     
-    my_graph.add_directed_edge(5, 6, 0);
-    my_graph.add_directed_edge(2, 6, 1);
-    my_graph.add_directed_edge(7, 8, 10);
-    my_graph.add_directed_edge(8, 9, 4);
+    my_graph.add_undirected_edge(5, 4, 0);
+    my_graph.add_undirected_edge(2, 0, 1);
+    my_graph.add_undirected_edge(7, 0, 10);
+    my_graph.add_undirected_edge(2, 6, 4);
     
     
-    vector<vector<Edge> > v=my_graph.prims(0);
+    my_graph.djikstra(0, 7);
     
-    for (int i=0; i<v.size(); i++){
-        print_vector(v[i]);
-        cout<<endl;
-    }
+
 }
 
 
