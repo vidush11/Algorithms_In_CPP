@@ -54,6 +54,10 @@ struct Stack{
     bool is_empty(){
         return (top==0);
     }
+    
+    Node* top_elem(){
+        return top->elem;
+    }
 };
 
 struct Edge{
@@ -79,23 +83,6 @@ void add_directed_edge_(map<Node* , vector<Edge> > &graph, Node* from, Node* to,
 }
 
 
-void DFS_(map<Node* , vector<Edge> > graph, Node* from, int n){
-    int visit[n]; //visited array
-    for (int i=0; i<n; i++) visit[i]=0;
-    Stack my_stack= *(new Stack());
-    
-    my_stack.push(from);
-    while (not my_stack.is_empty()){
-        Node* node=my_stack.pop();
-        if (visit[node->data]) continue; //if node is visited;
-        cout<<node->data<<' ';
-        for (Edge edge: graph[node]){
-            my_stack.push(edge.to);
-        }
-        visit[node->data]=1;
-    }
-    cout<<endl;
-}
 
 struct Graph{
     vector<Node *> nodes;
@@ -120,33 +107,83 @@ struct Graph{
     void add_directed_edge(int from, int to, int cost){
         Node* from_node=create_node(from);
         Node* to_node=create_node(to);
-        
-        nodes.push_back(from_node);
-        nodes.push_back(to_node);
-        
+                
         add_directed_edge_(graph, from_node, to_node, cost);
     }
     
     
-    void DFS(int from){
+    void TopSort(int from){
         Node* from_node=create_node(from);
         
-        DFS_(graph, from_node, nodes.size());
-    }
+        int n=nodes.size();
         
+        Node* answers[n];
+        for (int i=0; i<n; i++){
+            answers[i]=0;
+        }
+        
+        int j= n-1;
+        int visit[n]; //visited array
+        for (int i=0; i<n; i++) visit[i]=0;
+        Stack my_stack= *(new Stack());
+        
+        while (true){
+            
+            my_stack.push(from_node);
+            visit[from_node->data]=1;
+            
+            while (not my_stack.is_empty()){
+                Node* node= my_stack.top_elem();
+                int count=0;
+                for (Edge edge: graph[node]){
+                    if (not visit[edge.to->data]) {
+                        count++;
+                        my_stack.push(edge.to);
+                        visit[edge.to->data]=1;
+                    }
+                }
+                
+                if (count==0) {answers[j]=my_stack.pop(); j--;}
+            }
+            
+            int not_visit=0;
+            for (int i=0; i<n; i++){
+                if (not visit[i]){
+                    from_node=create_node(i);
+                    not_visit++;
+                    break;
+                }
+            }
+            if (not not_visit) break;
+                
+        }
+        
+
+        for (int i=0; i<n; i++){
+            cout<<answers[i]->data<<' ';
+        }
+        cout<<endl;
+    }
+    
+    
+    
 };
 
 
 int main(){
     Graph my_graph;
-    my_graph.add_directed_edge(0, 1, 4);
-    my_graph.add_directed_edge(0, 2, 5);
-    my_graph.add_directed_edge(1, 2, -2);
-    my_graph.add_directed_edge(1, 3, 6);
+    my_graph.add_directed_edge(0, 1, 3);
+    my_graph.add_directed_edge(0, 2, 2);
+    my_graph.add_directed_edge(0, 5, 3);
+    my_graph.add_directed_edge(1, 3, 1);
+    my_graph.add_directed_edge(1, 2, 6);
     my_graph.add_directed_edge(2, 3, 1);
-    my_graph.add_directed_edge(2, 2, 10);
+    my_graph.add_directed_edge(2, 4, 10);
+    my_graph.add_directed_edge(3, 4, 5);
+    my_graph.add_directed_edge(5, 4, 7);
     
-    my_graph.DFS(1);
+//    cout<<my_graph.nodes.size();
+    my_graph.TopSort(0);
 }
 
 

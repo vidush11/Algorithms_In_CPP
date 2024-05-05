@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB1C905B2BE783B100932E63 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB1C905A2BE783B100932E63 /* main.cpp */; };
 		AB46FB6E2BE3A653001C2945 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB46FB6D2BE3A653001C2945 /* main.cpp */; };
 		AB46FB792BE3F03E001C2945 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB46FB782BE3F03E001C2945 /* main.cpp */; };
 		AB78D22E2BDCDB72007CD752 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB78D22D2BDCDB72007CD752 /* main.cpp */; };
@@ -16,6 +17,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		AB1C90562BE783B100932E63 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		AB46FB692BE3A652001C2945 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -82,6 +92,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AB1C90582BE783B100932E63 /* djikstra_lazy */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = djikstra_lazy; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB1C905A2BE783B100932E63 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		AB46FB6B2BE3A652001C2945 /* bfs_shortest_path */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = bfs_shortest_path; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB46FB6D2BE3A653001C2945 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		AB46FB762BE3F03E001C2945 /* topological_sort */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = topological_sort; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +110,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AB1C90552BE783B100932E63 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AB46FB682BE3A652001C2945 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -150,6 +169,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB1C90592BE783B100932E63 /* djikstra_lazy */ = {
+			isa = PBXGroup;
+			children = (
+				AB1C905A2BE783B100932E63 /* main.cpp */,
+			);
+			path = djikstra_lazy;
+			sourceTree = "<group>";
+		};
 		AB46FB6C2BE3A653001C2945 /* bfs_shortest_path */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +211,7 @@
 				AB78D2662BDFCC14007CD752 /* prims_lazy */,
 				AB46FB6B2BE3A652001C2945 /* bfs_shortest_path */,
 				AB46FB762BE3F03E001C2945 /* topological_sort */,
+				AB1C90582BE783B100932E63 /* djikstra_lazy */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -197,6 +225,7 @@
 				AB78D2672BDFCC14007CD752 /* prims_lazy */,
 				AB46FB6C2BE3A653001C2945 /* bfs_shortest_path */,
 				AB46FB772BE3F03E001C2945 /* topological_sort */,
+				AB1C90592BE783B100932E63 /* djikstra_lazy */,
 			);
 			path = Algorithms_In_CPP;
 			sourceTree = "<group>";
@@ -236,6 +265,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AB1C90572BE783B100932E63 /* djikstra_lazy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB1C905E2BE783B100932E63 /* Build configuration list for PBXNativeTarget "djikstra_lazy" */;
+			buildPhases = (
+				AB1C90542BE783B100932E63 /* Sources */,
+				AB1C90552BE783B100932E63 /* Frameworks */,
+				AB1C90562BE783B100932E63 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = djikstra_lazy;
+			productName = djikstra_lazy;
+			productReference = AB1C90582BE783B100932E63 /* djikstra_lazy */;
+			productType = "com.apple.product-type.tool";
+		};
 		AB46FB6A2BE3A652001C2945 /* bfs_shortest_path */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB46FB712BE3A653001C2945 /* Build configuration list for PBXNativeTarget "bfs_shortest_path" */;
@@ -364,6 +410,9 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
+					AB1C90572BE783B100932E63 = {
+						CreatedOnToolsVersion = 15.3;
+					};
 					AB46FB6A2BE3A652001C2945 = {
 						CreatedOnToolsVersion = 15.3;
 					};
@@ -407,11 +456,20 @@
 				AB78D2652BDFCC14007CD752 /* prims_lazy */,
 				AB46FB6A2BE3A652001C2945 /* bfs_shortest_path */,
 				AB46FB752BE3F03E001C2945 /* topological_sort */,
+				AB1C90572BE783B100932E63 /* djikstra_lazy */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AB1C90542BE783B100932E63 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB1C905B2BE783B100932E63 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AB46FB672BE3A652001C2945 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -470,6 +528,28 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		AB1C905C2BE783B100932E63 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9968FP5BMJ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AB1C905D2BE783B100932E63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9968FP5BMJ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		AB46FB6F2BE3A653001C2945 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -728,6 +808,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AB1C905E2BE783B100932E63 /* Build configuration list for PBXNativeTarget "djikstra_lazy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB1C905C2BE783B100932E63 /* Debug */,
+				AB1C905D2BE783B100932E63 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AB46FB712BE3A653001C2945 /* Build configuration list for PBXNativeTarget "bfs_shortest_path" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
