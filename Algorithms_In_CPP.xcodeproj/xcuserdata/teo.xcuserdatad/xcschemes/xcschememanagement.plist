@@ -7,7 +7,7 @@
 		<key>2d_maxima.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>5</integer>
+			<integer>11</integer>
 		</dict>
 		<key>Algorithms_In_CPP.xcscheme_^#shared#^_</key>
 		<dict>
@@ -22,12 +22,12 @@
 		<key>bfs_shortest_path.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>6</integer>
+			<integer>10</integer>
 		</dict>
 		<key>dfs.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>8</integer>
+			<integer>9</integer>
 		</dict>
 		<key>djikstra_lazy.xcscheme_^#shared#^_</key>
 		<dict>
@@ -39,6 +39,11 @@
 			<key>orderHint</key>
 			<integer>7</integer>
 		</dict>
+		<key>points.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
 		<key>prims_lazy.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -49,10 +54,15 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
+		<key>time_measure.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 		<key>topological_sort.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>9</integer>
+			<integer>5</integer>
 		</dict>
 	</dict>
 </dict>

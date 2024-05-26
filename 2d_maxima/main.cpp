@@ -206,6 +206,8 @@ int main(){
     }
     
     Stack_elems* temp=my_stack.top;
+    
+    cout<<endl;
     while (temp){
         cout<<temp->elem->x<<' '<<temp->elem->y<<endl;
         temp=temp->next;
