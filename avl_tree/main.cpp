@@ -18,6 +18,20 @@ enum class CRT{
     match,
 };
 
+void print_CRT(CRT crt){
+    switch (crt){
+        case (CRT::before):{
+            cout<<"before"<<endl;
+        }break;
+        case (CRT::after):{
+            cout<<"after"<<endl;
+        }break;
+        case (CRT::match):{
+            cout<<"match"<<endl;
+        }break;
+    }
+}
+
 struct Node{
     double data=0;
     Node* left;
@@ -166,14 +180,69 @@ void print_node(auto node){
     printf("Data- %lf, Height- %d\n", node->data, node->height);
 }
 
+Node* pop_first(auto &node){
+    if (not node) return 0;
+    Node* to_return;
+    if (node->left){
+        to_return=pop_first(node->left);
+        balance(node);
+        update(node);
+    }
+    else {
+        to_return=node;
+        node=0;
+    }
+    
+    return to_return;
+    
+   
+        
+}
 
+
+Node* search_succ(double key, Node* answer, auto root){
+    CRT cr;
+    
+    if (not root) return answer;
+    
+    if (key<root->data) cr=CRT::before;
+    else if (key>root->data) cr=CRT::after;
+    else cr=CRT::match;
+    
+    if (cr==CRT::before){
+        return search_succ(key, root, root->left );
+    }
+    else {
+        return search_succ(key, answer, root->right);
+    }
+    
+    
+}
+
+Node* search_pred(double key, Node* answer, Node* root){
+    CRT cr;
+    
+    if (not root) return answer;
+    
+    if (key<root->data) cr=CRT::before;
+    else if (key> root->data) cr=CRT::after;
+    else cr=CRT::match;
+    
+    if (cr==CRT::after){
+        return search_pred(key, root ,root->right );
+    }
+    else {
+        return search_pred(key, answer, root->left);
+    }
+    
+}
 int main() {
     Node* root=0;
     
 
     ifstream fin("/Users/teo/Desktop/Algorithms_In_CPP/avl_tree/numbers.txt");
-    ofstream fout("/Users/teo/Desktop/Algorithms_In_CPP/avl_tree/output.txt");
-
+//    ofstream fout("/Users/teo/Desktop/Algorithms_In_CPP/avl_tree/output.txt");
+//
     clock_t start= clock();
     double x;
     
@@ -191,15 +260,22 @@ int main() {
 
     print_node(root);
     
-    start= clock();
-
-    ifstream fin1("/Users/teo/Desktop/Algorithms_In_CPP/avl_tree/numbers.txt");
+    fin.close();
     
+    start= clock();
+    
+    print_node(pop_first(root));
+    cout<<endl;
+
+    print_node(search_pred(1, 0, root));
+    print_node(search_succ(42.036781, 0, root));
+    cout<<endl;
+    
+    fin.open("/Users/teo/Desktop/Algorithms_In_CPP/avl_tree/numbers.txt");
    
-    while (fin1){
-        fin1>>x;
-        
-//        cout<<x<<","<< del(x, root)<<" ";
+    while (fin){
+        fin>>x;
+    
         del(x, root);
         
     }
@@ -212,6 +288,7 @@ int main() {
 
     print_node(root);
     
+    fin.close();
     
     return 0;
 }
