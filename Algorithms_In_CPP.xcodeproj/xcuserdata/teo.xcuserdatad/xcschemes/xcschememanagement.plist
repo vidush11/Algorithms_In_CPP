@@ -54,6 +54,11 @@
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
+		<key>points_final.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
+		</dict>
 		<key>prims_lazy.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
