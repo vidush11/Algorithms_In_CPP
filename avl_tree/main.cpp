@@ -185,18 +185,16 @@ Node* pop_first(auto &node){
     Node* to_return;
     if (node->left){
         to_return=pop_first(node->left);
-        balance(node);
         update(node);
+        balance(node);
     }
     else {
         to_return=node;
-        node=0;
+        node=node->right;
     }
     
     return to_return;
     
-   
-        
 }
 
 
@@ -239,10 +237,10 @@ Node* search_pred(double key, Node* answer, Node* root){
 int main() {
     Node* root=0;
     
-
+   
     ifstream fin("/Users/teo/Desktop/Algorithms_In_CPP/avl_tree/numbers.txt");
-//    ofstream fout("/Users/teo/Desktop/Algorithms_In_CPP/avl_tree/output.txt");
-//
+////    ofstream fout("/Users/teo/Desktop/Algorithms_In_CPP/avl_tree/output.txt");
+////
     clock_t start= clock();
     double x;
     
@@ -256,39 +254,42 @@ int main() {
     
     double time=(double) (end-start) /CLOCKS_PER_SEC;
     
-    cout<<"Time elapsed- "<<time<<"s."<<endl;
-
-    print_node(root);
-    
-    fin.close();
-    
-    start= clock();
-    
-    print_node(pop_first(root));
-    cout<<endl;
-
-    print_node(search_pred(1, 0, root));
-    print_node(search_succ(42.036781, 0, root));
-    cout<<endl;
-    
-    fin.open("/Users/teo/Desktop/Algorithms_In_CPP/avl_tree/numbers.txt");
-   
-    while (fin){
-        fin>>x;
-    
-        del(x, root);
-        
+    while (root){
+        print_node(pop_first(root));
     }
-    
-    end=clock();
-    
-    time=(double) (end-start) /CLOCKS_PER_SEC;
-    
-    cout<<"Time elapsed for deletion- "<<time<<"s."<<endl;
-
-    print_node(root);
-    
-    fin.close();
+//    cout<<"Time elapsed- "<<time<<"s."<<endl;
+//
+//    print_node(root);
+//    
+//    fin.close();
+//    
+//    start= clock();
+//    
+//    print_node(pop_first(root));
+//    cout<<endl;
+//
+//    print_node(search_pred(1, 0, root));
+//    print_node(search_succ(42.036781, 0, root));
+//    cout<<endl;
+//    
+//    fin.open("/Users/teo/Desktop/Algorithms_In_CPP/avl_tree/numbers.txt");
+//   
+//    while (fin){
+//        fin>>x;
+//    
+//        del(x, root);
+//        
+//    }
+//    
+//    end=clock();
+//    
+//    time=(double) (end-start) /CLOCKS_PER_SEC;
+//    
+//    cout<<"Time elapsed for deletion- "<<time<<"s."<<endl;
+//
+//    print_node(root);
+//    
+//    fin.close();
     
     return 0;
 }
